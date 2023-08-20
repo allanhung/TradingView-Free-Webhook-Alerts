@@ -145,6 +145,7 @@ class EmailListener:
         messages = self.server.search(search_filter)
         if (latest_only):
             messages = messages[-1]
+        self.logger(f"search_filter: {search_filter}, message count: {len(messages)}")
         # For each unseen message
         for uid, message_data in self.server.fetch(messages, 'RFC822').items():
             # Get the message
@@ -236,6 +237,8 @@ class EmailListener:
         # If there isn't a date
         if date is None:
             return False
+        else:
+           date = date.replace(" (UTC)", "")
         return date
 
 
